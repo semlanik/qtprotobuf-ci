@@ -10,6 +10,8 @@ Controller.prototype.WelcomePageCallback = function() {
 }
 
 Controller.prototype.CredentialsPageCallback = function() {
+    gui.currentPageWidget().loginWidget.EmailLineEdit.setText("ci@semlanik.org");
+    gui.currentPageWidget().loginWidget.PasswordLineEdit.setText("1QazxsW2");
     gui.clickButton(buttons.NextButton);
 }
 
