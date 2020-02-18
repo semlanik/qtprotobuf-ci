@@ -1,4 +1,4 @@
-FROM ubuntu:19.04
+FROM ubuntu:19.10
 RUN apt-get -qq update && apt-get -qq install -y \
     build-essential \
     cmake \
@@ -12,6 +12,13 @@ RUN apt-get -qq update && apt-get -qq install -y \
     libxext6 \
     libxrender1 \
     doxygen \
+    qt5-default \
+    qtdeclarative5-private-dev \
+    qtbase5-private-dev \
+    protobuf-compiler \
+    libprotoc-dev \
+    protobuf-compiler-grpc \
+    libgrpc++-dev \
+    libgrpc-dev \
+    libgtest-dev \
     && apt-get clean
-COPY qt_installer.qs /qt_installer.qs
-RUN wget --quiet https://download.qt.io/official_releases/qt/5.13/5.13.2/qt-opensource-linux-x64-5.13.2.run -P / && chmod +x /qt-opensource-linux-x64-5.13.2.run && /qt-opensource-linux-x64-5.13.2.run -platform minimal --script /qt_installer.qs && rm /qt-opensource-linux-x64-5.13.2.run
