@@ -1,5 +1,6 @@
-FROM ubuntu:19.04
-RUN apt-get -qq update && apt-get -qq install -y \
+FROM ubuntu:20.04
+ENV TZ=Europe/Berlin
+RUN apt-get -qq update && DEBIAN_FRONTEND="noninteractive" apt-get -qq install -y \
     build-essential \
     cmake \
     golang \
@@ -13,5 +14,6 @@ RUN apt-get -qq update && apt-get -qq install -y \
     libxrender1 \
     doxygen \
     && apt-get clean
+RUN DEBIAN_FRONTEND="noninteractive" apt-get -qq install -y libxcomposite1 libxkbcommon-x11-0 libwayland-cursor0
 COPY qt_installer.qs /qt_installer.qs
-RUN wget --quiet https://download.qt.io/official_releases/qt/5.13/5.13.2/qt-opensource-linux-x64-5.13.2.run -P / && chmod +x /qt-opensource-linux-x64-5.13.2.run && /qt-opensource-linux-x64-5.13.2.run -platform minimal --script /qt_installer.qs && rm /qt-opensource-linux-x64-5.13.2.run
+RUN wget -q https://download.qt.io/official_releases/online_installers/qt-unified-linux-x64-online.run -O /qt-unified-linux-x64-online.run && chmod +x /qt-unified-linux-x64-online.run && /qt-unified-linux-x64-online.run -platform minimal --script /qt_installer.qs && rm /qt-unified-linux-x64-online.run
