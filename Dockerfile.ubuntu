@@ -1,5 +1,6 @@
-FROM ubuntu:19.10
-RUN apt-get -qq update && apt-get -qq install -y \
+FROM ubuntu:20.04
+ENV TZ="Europe/Berlin"
+RUN apt-get -qq update && DEBIAN_FRONTEND="noninteractive" apt-get -qq install -y \
     build-essential \
     cmake \
     golang \
