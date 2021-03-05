@@ -1,14 +1,12 @@
-FROM microsoft/windowsservercore:10.0.14393.1884 as build-env
+FROM mcr.microsoft.com/windows:20H2
 
 # Disable crash dialog for release-mode runtimes
 RUN reg add "HKLM\SOFTWARE\Microsoft\Windows\Windows Error Reporting" /v Disabled /t REG_DWORD /d 1 /f
 RUN reg add "HKLM\SOFTWARE\Microsoft\Windows\Windows Error Reporting" /v DontShowUI /t REG_DWORD /d 1 /f
-
 RUN @powershell -NoProfile -ExecutionPolicy Bypass -Command \
     $Env:chocolateyVersion = '0.10.8' ; \
     $Env:chocolateyUseWindowsCompression = 'false' ; \
     "iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))" && SET "PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin"
-RUN choco install -y python2 --version 2.7.14 && refreshenv && python --version && pip --version
 RUN choco install -y vcredist140
 RUN choco install -y visualcpp-build-tools --version 14.0.25420.1 && dir "%PROGRAMFILES(X86)%\Microsoft Visual C++ Build Tools"
 RUN choco install -y unzip --version 6.0
@@ -17,5 +15,3 @@ RUN choco install -y cmake
 RUN choco install -y strawberryperl
 RUN choco install -y golang
 RUN choco install -y yasm
-WORKDIR C:/
-ADD https://download.qt.io/official_releases/qt/5.13/5.13.2/qt-opensource-windows-x86-5.13.2.exe qt-opensource-windows-x86-5.13.2.exe
